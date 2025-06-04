@@ -1,3 +1,8 @@
+Данный репозиторий содержит простой сайт с формой логина и возможностью добавления записей для пользователя (оригинальный сайт был скачан где-то на просторах github).
+Связка nginx+php+mysql разворачивается с помощью docker-compose.
+
+Для корректной развертки необходимо выполнить некоторые действия.
+
 1)mkdir -p /opt/nwaf/{waf-config,mlc-config,nwaf-api,nwaf-cabinet,nwaf-scanner,nwaf-db}
 
 2)touch /opt/nwaf/{waf-config,mlc-config,nwaf-api,nwaf-cabinet,nwaf-scanner}/first-launch
