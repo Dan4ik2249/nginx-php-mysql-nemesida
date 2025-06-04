@@ -1,0 +1,60 @@
+networks:
+  server:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    image: nemesida/nwaf-dyn:latest
+    ports:
+      - 80:80
+      - 5672:5672
+    volumes:
+      - ./app/:/var/www/public/
+      #- ./nginx/:/etc/nginx/conf.d/
+      #- ./log/nginx/:/var/log/nginx/
+      - /opt/nwaf/waf-config:/nginx.configs
+    networks:
+      - server
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
+  php:
+    container_name: php
+    build: ./php/
+    volumes:
+      - ./app/:/var/www/public/
+    networks:
+      - server
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: DSAewq321#@!
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: waf
+      MYSQL_PASSWORD: ASDqwe123!@#
+    ports:
+      - 3306:3306
+    networks:
+      - server
+    volumes:
+      - ./db/waf.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+  #nwaf-dyn:
+    #image: nemesida/nwaf-dyn:latest
+    #container_name: nwaf-dyn
+    #ports:
+      #- 80:80
+      #- 5672:5672
+    #volumes:
+      #- /opt/nwaf/waf-config:/nginx.configs
+    #ulimits:
+      #nofile:
+        #soft: "65536"
+        #hard: "65536"
+volumes:
+  db_volume:
+    driver: local
