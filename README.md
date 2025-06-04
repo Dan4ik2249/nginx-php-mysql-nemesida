@@ -9,7 +9,7 @@
 
 3)docker-compose up --build -d
 
-4) (В случае проблем)
+4)В случае проблем
 
 chmod -R 0555 /opt/nwaf/nwaf-api
 
